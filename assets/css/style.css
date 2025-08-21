@@ -1,0 +1,38 @@
+:root {
+  --orange: #F58220;
+  --dark: #231F20;
+  --white: #FFFFFF;
+}
+
+body {
+  background: var(--white);
+  font-family: Arial, sans-serif;
+}
+
+.transactions h5 {
+  font-weight: bold;
+}
+
+.transaction-item {
+  font-size: 0.95rem;
+}
+
+.navbar {
+  font-size: 0.85rem;
+}
+
+.navbar i {
+  font-size: 1.2rem;
+}
+
+#bottom-navbar {
+  background-color: #F58220;
+  color: white;
+}
+#bottom-navbar i {
+  font-size: 18px;
+}
+#bottom-navbar div {
+  font-size: 14px;
+}
+
