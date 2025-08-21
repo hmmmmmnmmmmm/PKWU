@@ -25,7 +25,8 @@
 	<div class="mb-3">
 	  <label class="form-label">Pilihan Layanan</label>
     <select name="layanan" id="layanan">
-      <option value=""></option>
+      <option value="">165rb 25mbps</option>
+			<option value="">110k 10mbps</option>
     </select>
 	</div>
     <button type="submit" class="btn btn-warning">Simpan</button>
