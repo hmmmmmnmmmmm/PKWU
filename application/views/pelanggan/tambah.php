@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-warning w-100">Tambah</button>
+    <button type="submit" class="btn btn-warning w-100" style="background-color: #F58220;">Tambah</button>
     <a href="<?= site_url('pelanggan'); ?>" class="btn btn-secondary w-100 mt-2">Batal</a>
   </form>
 </div>
