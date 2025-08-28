@@ -26,4 +26,8 @@ class Pelanggan extends CI_Controller {
         }
         $this->load->view('pelanggan/tambah');
     }
+	public function get_all() {
+    return $this->db->select('*')->from('pelanggan')->get()->result();
+}
+
 }

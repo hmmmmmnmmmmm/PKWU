@@ -3,39 +3,39 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Data Pelanggan</title>
+	<title>Transaction History</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="bg-white">
+<body class="bg-light">
 
 	<div class="container mt-3">
-		<!-- Header -->
 		<div class="d-flex justify-content-between align-items-center mb-3">
-			<h5>Data Pelanggan</h5>
-			<a href="<?= site_url('pelanggan/tambah'); ?>" class="btn btn-sm btn-warning">
-				<i class="fa-solid fa-plus"></i> Tambah
-			</a>
+			<h5><i class="fa fa-history"></i> Transaction History</h5>
+			<a href="<?= site_url('transaksi'); ?>" class="btn btn-sm btn-outline-secondary"><i class="fa fa-rotate-right"></i></a>
 		</div>
 
-		<!-- List Pelanggan -->
-		<?php foreach ($pelanggan as $p): ?>
-			<div class="d-flex justify-content-between align-items-center p-2 mb-2 bg-light rounded">
-				<div>
-					<i class="fa-solid fa-user-circle fa-lg me-2"></i>
-					<strong><?= $p->nama; ?></strong><br>
-					<small class="text-muted"><?= $p->alamat; ?></small>
+		<?php if (!empty($transaksi)): ?>
+			<?php foreach ($transaksi as $t): ?>
+				<div class="d-flex align-items-center p-2 mb-2 bg-white rounded shadow-sm">
+					<img src="<?= base_url('assets/images/profile.jpg'); ?>" alt="User" class="rounded-circle me-3" width="40" height="40">
+					<div class="flex-grow-1">
+						<strong><?= $t->nama; ?></strong><br>
+						<small><?= $t->status; ?></small><br>
+						<small class="text-muted"><?= $t->deskripsi; ?></small>
+					</div>
 				</div>
-				<a href="<?= site_url('pelanggan/detail/' . $p->id_pelanggan); ?>" class="btn btn-outline-primary btn-sm">Detail</a>
-			</div>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<p class="text-center">Tidak ada transaksi.</p>
+		<?php endif; ?>
 	</div>
 
+	<!-- Bottom Navbar -->
 	<nav class="navbar fixed-bottom d-flex justify-content-around py-2"
 		id="bottom-navbar"
 		style="background-color: #F58220; color: white;">
-
 		<a href="<?= base_url('wifi') ?>" class="text-center text-white text-decoration-none">
 			<i class="fa-solid fa-house"></i><br>Dashboard
 		</a>
@@ -51,8 +51,8 @@
 		<a href="<?= base_url('profil') ?>" class="text-center text-white text-decoration-none">
 			<i class="fa-solid fa-user-circle"></i><br>Profil
 		</a>
-
 	</nav>
+
 </body>
 
 </html>

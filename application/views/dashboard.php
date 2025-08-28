@@ -18,7 +18,7 @@
 	<!-- Logo -->
 	<div class="container mt-3">
 		<div class="text-start">
-			<img src="<?= base_url('assets/images/logo.png'); ?>" alt="Logo" style="max-width: 160px;">
+			<img src="<?= base_url('assets/images/logo.png'); ?>" alt="Logo" style="max-width: 130px;">
 		</div>
 	</div>
 
@@ -50,9 +50,11 @@
 				</button>
 			</div>
 			<div class="col-3">
-				<button class="btn btn-outline-warning w-100">
-					<i class="fa-solid fa-download"></i><br>Receive
+				<a href="<?= base_url('transaksi') ?>"><button class="btn btn-outline-warning w-100">
+					<i class="fa-solid fa-download"></i><br>Recieve
 				</button>
+					</a>
+					
 			</div>
 			<div class="col-3">
 				<button class="btn btn-outline-warning w-100">
