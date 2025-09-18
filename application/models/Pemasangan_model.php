@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pembayaran_model extends CI_Model {
+class Pemasangan_model extends CI_Model {
 
-    private $table = 'pembayaran';
+    private $table = 'pemasangan';
 
     public function insert($data) {
         return $this->db->insert($this->table, $data);

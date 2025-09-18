@@ -1,13 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Wifi_model extends CI_Model {
+class Wifi_model extends CI_Model
+{
 
-    public function get_transactions() {
-        return [
-            ["name" => "Asep", "amount" => 100000],
-            ["name" => "Asep", "amount" => 100000],
-            ["name" => "Asep", "amount" => 100000],
-        ];
-    }
+	public function get_transactions()
+	{
+		$this->db->select('nama as name, jumlah as amount, status, created_at');
+		$this->db->from('pembayaran');
+		$this->db->order_by('created_at', 'DESC');
+		$this->db->limit(5);
+		return $this->db->get()->result_array();
+	}
 }

@@ -42,11 +42,11 @@
 				<div class="input-group">
 					<span class="input-group-text"><i class="fa fa-wifi"></i></span>
 					<select name="layanan" class="form-select" required>
-						<option value="">165rb 25mbps</option>
-						<option value="">110k 10mbps</option>
-						<option value="">590k 100mbps</option>
-						<option value="">515k 50mbps</option>
-						<option value="">485k 100mbps</option>
+						<option value="165rb 25mbps">165rb 25mbps</option>
+						<option value="110k 10mbps">110k 10mbps</option>
+						<option value="590k 100mbps">590k 100mbps</option>
+						<option value="515k 50mbps">515k 50mbps</option>
+						<option value="485k 100mbps">485k 100mbps</option>
 					</select>
 				</div>
 			</div>

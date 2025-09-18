@@ -9,7 +9,14 @@
 </head>
 
 <body class="bg-white">
+	<!-- Logo -->
+	<div class="container mt-3">
+		<div class="text-start">
+			<img src="<?= base_url('assets/images/logo.png'); ?>" alt="Logo" style="max-width: 130px;">
+		</div>
+	</div>
 
+	<?= $this->session->flashdata('notifikasi'); ?>
 	<div class="container mt-3">
 		<!-- Header -->
 		<div class="d-flex justify-content-between align-items-center mb-3">
@@ -27,32 +34,44 @@
 					<strong><?= $p->nama; ?></strong><br>
 					<small class="text-muted"><?= $p->alamat; ?></small>
 				</div>
-				<a href="<?= site_url('pelanggan/detail/' . $p->id_pelanggan); ?>" class="btn btn-outline-primary btn-sm">Detail</a>
+				<div>
+					<a href="<?= site_url('pelanggan/detail/' . $p->id_pelanggan); ?>"
+						class="btn btn-outline-primary btn-sm">Detail</a>
+					<a href="<?= site_url('pelanggan/delete/' . $p->id_pelanggan); ?>"
+						class="btn btn-outline-danger btn-sm"
+						onclick="return confirm('Yakin ingin menghapus <?= $p->nama; ?>?');">
+						Delete
+					</a>
+				</div>
 			</div>
+
 		<?php endforeach; ?>
 	</div>
 
-	<nav class="navbar fixed-bottom d-flex justify-content-around py-2"
-		id="bottom-navbar"
-		style="background-color: #F58220; color: white;">
+<!-- Bottom Navbar -->
+<nav class="navbar fixed-bottom" id="bottom-navbar"
+     style="background-color: #F58220; color: white;">
 
-		<a href="<?= base_url('wifi') ?>" class="text-center text-white text-decoration-none">
-			<i class="fa-solid fa-house"></i><br>Dashboard
-		</a>
+  <div class="d-flex w-100">
+    <a href="<?= base_url('wifi') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+      <i class="fa-solid fa-house fa-lg"></i><br>Dashboard
+    </a>
 
-		<a href="<?= base_url('pelanggan') ?>" class="text-center text-white text-decoration-none">
-			<i class="fa-solid fa-users"></i><br>Pengguna
-		</a>
+    <a href="<?= base_url('pelanggan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+      <i class="fa-solid fa-users fa-lg"></i><br>Pengguna
+    </a>
 
-		<a href="<?= base_url('laporan') ?>" class="text-center text-white text-decoration-none">
-			<i class="fa-solid fa-chart-line"></i><br>Laporan
-		</a>
+    <a href="<?= base_url('laporan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+      <i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
+    </a>
 
-		<a href="<?= base_url('profil') ?>" class="text-center text-white text-decoration-none">
-			<i class="fa-solid fa-user-circle"></i><br>Profil
-		</a>
+    <a href="<?= base_url('profil') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+      <i class="fa-solid fa-user-circle fa-lg"></i><br>Profil
+    </a>
+  </div>
+</nav>
 
-	</nav>
+
 </body>
 
 </html>
