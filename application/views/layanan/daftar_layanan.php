@@ -67,42 +67,75 @@
 
 <body>
 
-	<div class="container py-4">
-		<h4 class="mb-4">
-			Pilih Layanan di Kota: <?= !empty($kota) ? ucfirst($kota) : 'Belum dipilih' ?>
-		</h4>
+	<div class="container mt-4">
+		<h3 class="mb-4">Daftar Layanan</h3>
 
-
-		<?php if (empty($layanan)): ?>
-			<div class="alert alert-warning">Tidak ada layanan untuk kota ini.</div>
+		<!-- Tombol kembali sesuai role -->
+		<?php if ($this->session->userdata('role') == 'admin'): ?>
+			<a href="<?= base_url('wifi') ?>" class="btn btn-secondary">
+				<i class="fa fa-arrow-left"></i> Kembali
+			</a>
 		<?php else: ?>
-			<?php foreach ($layanan as $item): ?>
-				<div class="card card-layanan">
-					<h5><?= is_array($item) ? $item['nama'] : $item->nama_layanan ?></h5>
-					<p class="text-muted">
-						Kecepatan: <?= is_array($item) ? $item['kecepatan'] : $item->kecepatan ?>
-					</p>
-					<p>
-						<strong>
-							Rp <?= number_format(is_array($item) ? $item['harga'] : $item->harga, 0, ',', '.') ?>
-						</strong>
-					</p>
-				</div>
-			<?php endforeach; ?>
+			<a href="<?= base_url('pengguna') ?>" class="btn btn-secondary mb-3">
+				<i class="fa fa-arrow-left"></i> Kembali
+			</a>
 		<?php endif; ?>
+
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nama Layanan</th>
+					<th>Harga</th>
+					<th>Masa Aktif</th>
+					<th>Aksi</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if (!empty($layanan)) : ?>
+					<?php $no = 1;
+					foreach ($layanan as $l) : ?>
+						<tr>
+							<td><?= $no++; ?></td>
+							<td><?= htmlspecialchars($l->nama_layanan, ENT_QUOTES, 'UTF-8'); ?></td>
+							<td>Rp <?= number_format($l->harga, 0, ',', '.'); ?></td>
+							<td><?= $l->kota; ?></td>
+							<td><a href="<?= base_url('layanan/edit/' . $l->id_layanan) ?>" class="btn btn-sm btn-warning">
+									<i class="fa fa-edit"></i> Edit
+								</a>
+								<a href="<?= base_url('layanan/hapus/' . $l->id_layanan) ?>"
+									class="btn btn-sm btn-danger"
+									onclick="return confirm('Yakin ingin menghapus layanan ini?')">
+									<i class="fa fa-trash"></i> Hapus
+								</a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				<?php else : ?>
+					<tr>
+						<td colspan="4" class="text-center">Belum ada data layanan</td>
+					</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
 	</div>
+
 
 	<!-- Bottom Navbar -->
 	<nav class="navbar fixed-bottom" id="bottom-navbar"
 		style="background-color: #F58220; color: white;">
 
 		<div class="d-flex w-100">
-			<a href="<?= base_url('pengguna') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+			<a href="<?= base_url('wifi') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
 				<i class="fa-solid fa-house fa-lg"></i><br>Dashboard
 			</a>
 
-			<a href="<?= base_url('pemasangan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-				<i class="fa-solid fa-house-signal fa-lg"></i><br>Layanan
+			<a href="<?= base_url('pelanggan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-users fa-lg"></i><br>Pengguna
+			</a>
+
+			<a href="<?= base_url('laporan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
 			</a>
 
 			<a href="<?= base_url('profile') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">

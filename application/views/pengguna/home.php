@@ -46,22 +46,23 @@
 	<div class="container">
 		<div class="row text-center my-3">
 			<div class="col-4">
-				<a href="<?= base_url('transaksi') ?>"><button class="btn btn-outline-warning w-100">
-						<i class="fa-solid fa-clock"></i><br>Recieve
-					</button>
+				<a href="<?= base_url('') ?>" class="btn btn-outline-warning w-100 rounded-3">
+					<i class="fa-solid fa-clock"></i><br>30 hari lagi
 				</a>
-
 			</div>
+
 			<div class="col-4">
-				<button class="btn btn-outline-warning w-100">
-					<i class="fa-solid fa-signal"></i><br>Loan
+				<button class="btn btn-outline-warning w-100 rounded-3" disabled>
+					<i class="fa-solid fa-signal"></i><br>10mbps
 				</button>
 			</div>
+
 			<div class="col-4">
-				<a href="<?= base_url('pengguna/bayar') ?>"><button class="btn btn-outline-warning w-100">
-						<i class="fa-solid fa-add"></i><br>Bayar
-					</button></a>
+				<a href="<?= base_url('pengguna/bayar') ?>" class="btn btn-outline-warning w-100 rounded-3">
+					<i class="fa-solid fa-plus"></i><br>Bayar
+				</a>
 			</div>
+
 		</div>
 
 
@@ -76,9 +77,11 @@
 				</div>
 				<br>
 				<div class="col-6">
-					<button class="btn btn-outline-warning w-100">
-						<i class="fa-solid fa-x-twitter"></i><br>FnNett Official X
-					</button>
+					<a href="https://twitter.com/aiuiaoblubub" target="_blank">
+						<button class="btn btn-outline-warning w-100">
+							<i class="fa-brands fa-x-twitter"></i><br>FnNett Official X
+						</button>
+					</a>
 				</div>
 			</div>
 			<br>
@@ -91,9 +94,11 @@
 				</div>
 				<br>
 				<div class="col-6">
-					<button class="btn btn-outline-warning w-100">
-						<i class="fa-solid fa-whatsapp"></i><br>FnNett Official Whatsapp
-					</button>
+					<a href="https://wa.me/085728370200" target="_blank">
+						<button class="btn btn-outline-warning w-100">
+							<i class="fa-brands fa-whatsapp"></i><br>FnNett Official Whatsapp
+						</button>
+					</a>
 				</div>
 			</div>
 			<br>
@@ -114,8 +119,8 @@
 				<i class="fa-solid fa-house-signal fa-lg"></i><br>Layanan
 			</a>
 
-			<a href="<?= base_url('profil') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-				<i class="fa-solid fa-user-circle fa-lg"></i><br>Profil
+			<a href="<?= base_url('profile') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-user-circle fa-lg"></i><br>Profile
 			</a>
 		</div>
 	</nav>

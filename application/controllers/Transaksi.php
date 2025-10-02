@@ -12,7 +12,13 @@ class Transaksi extends CI_Controller
 
 	public function index()
 	{
-		$data['transaksi'] = $this->Transaksi_model->get_all(); // Gunakan 'transaksi' untuk view
+		$data['transaksi'] = $this->Transaksi_model->get_all(); 
+		$total = 0;
+		foreach ($data['transaksi'] as $t) {
+			$total += $t->jumlah; 
+		}
+
+		$data['total'] = $total;
 		$this->load->view('transaksi/index', $data);
 	}
 	public function setujui($id)
@@ -22,5 +28,21 @@ class Transaksi extends CI_Controller
 
 		$this->session->set_flashdata('success', 'Pembayaran telah disetujui.');
 		redirect('transaksi');
+	}
+
+	public function cetak() {
+		$transaksi = $this->db->get('pembayaran')->result();
+		$data['transaksi'] = $this->Transaksi_model->get_all(); 
+		$total = 0;
+		foreach ($data['transaksi'] as $t) {
+			$total += $t->jumlah; 
+		}
+
+		$data = [
+			'title' => 'Cetak Data Transaksi',
+			'transaksi' => $transaksi,
+			'total' => $total
+		];
+		$this->load->view('transaksi/cetak', $data);
 	}
 }

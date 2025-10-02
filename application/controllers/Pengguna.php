@@ -3,13 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pengguna extends CI_Controller
 {
-
-	// public function __construct() {
-	//     parent::__construct();
-	//     $this->load->model('Wifi_model');
-	//     $this->load->library('session'); // tambahin ini
-	// }
-
 	public function index()
 	{
 
@@ -17,7 +10,7 @@ class Pengguna extends CI_Controller
 			'title' => 'Wi-Fi FnNett'
 		];
 
-		$this->load->view('pengguna/login', $data);
+		$this->load->view('pengguna/home', $data);
 	}
 
 	public function bayar()
@@ -28,13 +21,17 @@ class Pengguna extends CI_Controller
 
 		$this->load->view('pengguna/bayar', $data);
 	}
-	public function home() 
-	{
-		$this->load->view('pengguna/home');
-	}
-	public function logout ()
+	public function logout()
 	{
 		$this->session->sess_destroy();
 		redirect('pengguna');
+	}
+	public function layanan()
+	{
+		$kota = $this->input->get('kota');
+		$data['layanan'] = $this->Layanan_model->getAll($kota);
+		$data['kota'] = $kota;
+
+		$this->load->view('layanan/index', $data);
 	}
 }

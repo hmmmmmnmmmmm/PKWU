@@ -2,119 +2,155 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Riwayat Transaksi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>Laporan</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<style>
+		body {
+			background-color: #f8f9fa;
+			padding-bottom: 100px;
+		}
 
-  <style>
-    body {
-      padding-bottom: 100px;
-      background-color: #f8f9fa;
-    }
+		.card-summary {
+			border-radius: 12px;
+			padding: 20px;
+			background: #fff;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+			margin-bottom: 20px;
+		}
 
-    .toast-container {
-      z-index: 1055;
-    }
+		.status-badge {
+			padding: 4px 10px;
+			border-radius: 12px;
+			font-size: 13px;
+			font-weight: 600;
+		}
 
-    .card-transaksi {
-      transition: box-shadow 0.2s ease;
-    }
+		.status-sudah {
+			background: #e6f9ec;
+			color: #1e9e4b;
+			border: 1px solid #1e9e4b;
+		}
 
-    .card-transaksi:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-  </style>
+		.status-belum {
+			background: #fdeaea;
+			color: #d93025;
+			border: 1px solid #d93025;
+		}
+	</style>
 </head>
 
 <body>
+	<div class="container mt-3">
+		<!-- Header -->
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h5>Laporan</h5>
+			<a href="<?= base_url('transaksi/cetak') ?>" class="btn btn-outline-secondary btn-sm">
+				<i class="fa fa-print"></i>
+			</a>
+			<!-- <button class="btn btn-outline-secondary btn-sm">
+				<i class="fa fa-print"></i>
+			</button> -->
+		</div>
 
-  <div class="container mt-3">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5><i class="fa fa-history"></i> Riwayat Transaksi</h5>
-      <a href="<?= site_url('transaksi'); ?>" class="btn btn-sm btn-outline-secondary">
-        <i class="fa fa-rotate-right"></i>
-      </a>
-    </div>
+		<!-- Ringkasan Total -->
+		<div class="card-summary">
+			<p class="mb-1 text-muted">Total Masuk</p>
+			<h4 class="mb-0 text-primary">IDR <?= number_format($total, 0, ',', '.') ?></h4>
+		</div>
 
-    <?php if (!empty($transaksi)): ?>
-      <?php foreach ($transaksi as $t): ?>
-        <?php
-          $badgeClass = match ($t->status) {
-            'berhasil' => 'bg-success',
-            'pending'  => 'bg-warning text-dark',
-            'gagal'    => 'bg-danger',
-            default    => 'bg-secondary'
-          };
-        ?>
-        <div class="d-flex align-items-center p-2 mb-2 bg-white rounded shadow-sm card-transaksi">
-          <img src="<?= base_url('assets/images/profile.jpg'); ?>" alt="User" class="rounded-circle me-3" width="40" height="40">
-          <div class="flex-grow-1">
-            <strong><?= $t->nama; ?></strong><br>
-            <small class="badge <?= $badgeClass ?>"><?= ucfirst($t->status); ?></small><br>
-            <small class="text-muted"><?= $t->note ?: 'Tidak ada catatan' ?></small><br>
-            <small class="text-muted">Rp <?= number_format($t->jumlah, 0, ',', '.') ?> - via <?= strtoupper($t->tipe) ?></small>
-          </div>
+		<!-- Daftar -->
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h6 class="mb-0" id="bulanSekarang"></h6>
+			<a href="#" class="text-primary small">See All</a>
+		</div>
 
-          <?php if ($t->status === 'pending'): ?>
-            <form action="<?= site_url('transaksi/setujui/' . $t->id) ?>" method="post" class="ms-3">
-              <button class="btn btn-sm btn-success">Setujui</button>
-            </form>
-          <?php endif; ?>
-        </div>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p class="text-center">Belum ada transaksi pembayaran.</p>
-    <?php endif; ?>
-  </div>
+		<!-- Daftar Laporan -->
+		<?php if (!empty($laporan)): ?>
+			<?php foreach ($laporan as $row): ?>
+				<div class="d-flex align-items-center bg-white rounded p-2 mb-2 shadow-sm">
+					<img src="<?= base_url('assets/images/profile.jpg'); ?>" class="rounded-circle me-3" width="40" height="40">
+					<div class="flex-grow-1">
+						<strong><?= $row->nama ?></strong><br>
+						<small class="text-muted"><?= $row->alamat ?></small>
+					</div>
+					<?php if ($row->status == 'sudah'): ?>
+						<span class="status-badge status-sudah">Sudah</span>
+					<?php else: ?>
+						<span class="status-badge status-belum">Belum</span>
+					<?php endif; ?>
+				</div>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<p class="text-center">Belum ada data laporan.</p>
+		<?php endif; ?>
 
-  <!-- Toast Notifikasi -->
-  <?php if ($this->session->flashdata('success')): ?>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-      <div class="toast show align-items-center text-white bg-success border-0" role="alert">
-        <div class="d-flex">
-          <div class="toast-body">
-            <?= $this->session->flashdata('success'); ?>
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-      </div>
-    </div>
-  <?php endif; ?>
+		<!-- Daftar Transaksi -->
+		<div id="transaction-list" class="mt-4">
+			<h6 class="mb-2">Daftar Transaksi</h6>
+			<?php if (!empty($transactions)): ?>
+				<?php foreach ($transactions as $trx): ?>
+					<?php
+					$badgeClass = 'bg-secondary';
+					if (isset($trx['status'])) {
+						$badgeClass = match ($trx['status']) {
+							'berhasil' => 'bg-success',
+							'pending' => 'bg-warning text-dark',
+							'gagal' => 'bg-danger',
+							default => 'bg-secondary'
+						};
+					}
 
-  <!-- Bottom Navbar -->
-  <nav class="navbar fixed-bottom" id="bottom-navbar" style="background-color: #F58220; color: white;">
-    <div class="d-flex w-100">
-      <a href="<?= base_url('wifi') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-        <i class="fa-solid fa-house fa-lg"></i><br>Dashboard
-      </a>
-      <a href="<?= base_url('pelanggan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-        <i class="fa-solid fa-users fa-lg"></i><br>Pengguna
-      </a>
-      <a href="<?= base_url('laporan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-        <i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
-      </a>
-      <a href="<?= base_url('profil') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-        <i class="fa-solid fa-user-circle fa-lg"></i><br>Profil
-      </a>
-    </div>
-  </nav>
+					$tanggal = isset($trx['created_at']) ? date('d M Y, H:i', strtotime($trx['created_at'])) : 'Belum ada waktu';
+					$statusText = isset($trx['status']) ? ucfirst($trx['status']) : 'Unknown';
+					?>
+					<div class="transaction-item d-flex justify-content-between align-items-center p-2 mb-2 bg-light rounded">
+						<div>
+							<strong><i class="fa-solid fa-user"></i> <?= $trx['name']; ?></strong><br>
+							<small><?= $tanggal ?></small><br>
+							<span class="badge <?= $badgeClass ?> badge-status"><?= $statusText ?></span>
+						</div>
+						<span class="text-success fw-semibold">+ Rp <?= number_format($trx['amount'], 0, ',', '.') ?></span>
+					</div>
+				<?php endforeach; ?>
+			<?php else: ?>
+				<p class="text-center">Belum ada data transaksi.</p>
+			<?php endif; ?>
+		</div>
+	</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Auto padding bottom sesuai navbar -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const navbar = document.getElementById("bottom-navbar");
-      const body = document.body;
-      if (navbar) {
-        const height = navbar.offsetHeight + 20;
-        body.style.paddingBottom = height + 'px';
-      }
-    });
-  </script>
-
+	<!-- Bottom Navbar -->
+	<nav class="navbar fixed-bottom" style="background-color: #F58220; color: white;">
+		<div class="d-flex w-100">
+			<a href="<?= base_url('wifi') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-house fa-lg"></i><br>Dashboard
+			</a>
+			<a href="<?= base_url('pelanggan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-users fa-lg"></i><br>Pengguna
+			</a>
+			<a href="<?= base_url('laporan') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
+			</a>
+			<a href="<?= base_url('profile') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-user-circle fa-lg"></i><br>Profile
+			</a>
+		</div>
+	</nav>
 </body>
+
+<script>
+	const namaBulan = [
+		"Januari", "Februari", "Maret", "April", "Mei", "Juni",
+		"Juli", "Agustus", "September", "Oktober", "November", "Desember"
+	];
+
+	const sekarang = new Date();
+	const bulan = namaBulan[sekarang.getMonth()];
+	const tahun = sekarang.getFullYear();
+
+	document.getElementById("bulanSekarang").textContent = `${bulan} ${tahun}`;
+</script>
 
 </html>

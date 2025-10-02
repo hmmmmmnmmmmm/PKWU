@@ -65,8 +65,8 @@
       <i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
     </a>
 
-    <a href="<?= base_url('profil') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-      <i class="fa-solid fa-user-circle fa-lg"></i><br>Profil
+    <a href="<?= base_url('profile') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+      <i class="fa-solid fa-user-circle fa-lg"></i><br>Profile
     </a>
   </div>
 </nav>

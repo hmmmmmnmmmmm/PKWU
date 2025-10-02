@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div>
-				<i class="fa-solid fa-right-to-bracket fa-lg"></i>
+				<a href="<?= base_url('auth/logout') ?>" class="logout-link"><i class="fa-solid fa-right-to-bracket fa-lg"></i></a>
 			</div>
 		</div>
 	</div>
@@ -76,7 +76,7 @@
 	<div class="container">
 		<div class="row text-center my-3">
 			<div class="col-4">
-				<a href="<?= base_url('layanan') ?>"><button class="btn btn-outline-warning w-100">
+				<a href="<?= base_url('layanan/tambah') ?>"><button class="btn btn-outline-warning w-100">
 						<i class="fa-solid fa-plus"></i><br>Tambah pilihan layanan
 					</button></a>
 			</div>
@@ -160,13 +160,11 @@
 				<i class="fa-solid fa-chart-line fa-lg"></i><br>Laporan
 			</a>
 
-			<a href="<?= base_url('profil') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
-				<i class="fa-solid fa-user-circle fa-lg"></i><br>Profil
+			<a href="<?= base_url('profile') ?>" class="nav-item flex-fill text-center text-white text-decoration-none py-2">
+				<i class="fa-solid fa-user-circle fa-lg"></i><br>Profile
 			</a>
 		</div>
 	</nav>
-
-
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

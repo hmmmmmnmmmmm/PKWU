@@ -117,7 +117,7 @@
 			}
 
 			// Redirect ke halaman layanan dengan parameter kota
-			window.location.href = "<?= site_url('layanan/index?kota=') ?>" + kota;
+			window.location.href = "<?= site_url('pilihan/index?kota=') ?>" + kota;
 		}
 	</script>
 

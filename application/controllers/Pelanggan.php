@@ -37,8 +37,20 @@ class Pelanggan extends CI_Controller
 	public function detail($id)
 	{
 		$data['pelanggan'] = $this->Pelanggan_model->get_by_id($id);
+
+		if (!$data['pelanggan']) {
+			$this->session->set_flashdata('notifikasi', '
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Data pelanggan tidak ditemukan!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        ');
+			redirect('pelanggan');
+		}
+
 		$this->load->view('pelanggan/detail', $data);
 	}
+
 	public function delete($id)
 	{
 		$where = [

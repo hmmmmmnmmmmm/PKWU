@@ -1,40 +1,69 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Layanan extends CI_Controller {
+class Layanan extends CI_Controller
+{
 
-    public function index() {
-        $kota = $this->input->get('kota');
+	public function __construct()
+	{
+		parent::__construct();
+		// if ($this->session->userdata('role') == NULL) {
+		// 	redirect('auth');
+		// }
+		$this->load->model('Layanan_model');
+	}
 
-        // Simulasi data berdasarkan kota
-        $layananData = [
-            'solo' => [
-                ['nama' => 'Paket Hemat 20Mbps', 'kecepatan' => '20Mbps', 'harga' => 150000],
-                ['nama' => 'Paket Pro 50Mbps', 'kecepatan' => '50Mbps', 'harga' => 250000],
-                ['nama' => 'Paket Ultra 100Mbps', 'kecepatan' => '100Mbps', 'harga' => 350000],
-            ],
-            'yogyakarta' => [
-                ['nama' => 'Paket Lite 10Mbps', 'kecepatan' => '10Mbps', 'harga' => 100000],
-                ['nama' => 'Paket Family 30Mbps', 'kecepatan' => '30Mbps', 'harga' => 200000],
-            ],
-            'semarang' => [
-                ['nama' => 'Paket Starter 25Mbps', 'kecepatan' => '25Mbps', 'harga' => 180000],
-                ['nama' => 'Paket Premium 75Mbps', 'kecepatan' => '75Mbps', 'harga' => 300000],
-            ],
-        ];
+	public function index()
+	{
+		$kota = $this->input->get('kota');
+		$data['layanan'] = $this->Layanan_model->getAll($kota);
+		$data['kota'] = $kota;
 
-        $layanan = isset($layananData[$kota]) ? $layananData[$kota] : [];
+		$this->load->view('layanan/daftar_layanan', $data);
+	}
 
-        $data = [
-            'kota' => $kota,
-            'layanan' => $layanan
-        ];
+	public function tambah()
+	{
+		if ($this->input->post()) {
+			$data = [
+				'nama_layanan' => $this->input->post('nama_layanan'),
+				'kecepatan'    => $this->input->post('kecepatan'),
+				'harga'        => $this->input->post('harga'),
+				'kota'         => $this->input->post('kota'),
+			];
+			$this->Layanan_model->insert($data);
+			redirect('layanan');
+		} else {
+			$this->load->view('layanan/tambah');
+		}
+	}
 
-        $this->load->view('layanan/index', $data);
-    }
-	public function tambah() {
-		// Logika untuk menambahkan layanan baru
-		// Misalnya, menampilkan form untuk input data layanan baru
-		$this->load->view('layanan/tambah');
+	public function hapus($id)
+	{
+		$this->Layanan_model->delete($id);
+		redirect('layanan');
+	}
+	public function edit($id)
+	{
+		$data['layanan'] = $this->Layanan_model->get_by_id($id);
+
+		if (!$data['layanan']) {
+			show_404();
+		}
+
+		$this->load->view('layanan/edit', $data);
+	}
+
+	public function update()
+	{
+		$id = $this->input->post('id_layanan');
+		$data = [
+			'nama_layanan' => $this->input->post('nama_layanan'),
+			'kecepatan'    => $this->input->post('kecepatan'),
+			'harga'        => $this->input->post('harga'),
+			'kota'   => $this->input->post('kota'),
+		];
+		$this->Layanan_model->update($id, $data);
+		redirect('layanan');
 	}
 }
